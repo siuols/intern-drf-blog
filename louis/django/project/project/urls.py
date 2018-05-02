@@ -25,9 +25,12 @@ from rest_framework import routers
 
 from rest_framework.routers import DefaultRouter
 
-router = routers.DefaultRouter()
-# router.register(r'animes', AnimeViewSet, base_name='anime')
+from blogdrf.views import CategoryViewSet, TagViewSet, PostViewSet
 
+router = routers.DefaultRouter()
+router.register(r'category', CategoryViewSet, base_name='category')
+router.register(r'tag', TagViewSet, base_name='tag')
+router.register(r'post', PostViewSet, base_name='post')
 
 urlpatterns = [
     path('api/', include(router.urls)),

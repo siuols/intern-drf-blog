@@ -21,6 +21,7 @@ class Category(models.Model):
 STATUS_CHOICES =(
         ('published', 'Published'),
         ('draft', 'Draft'),
+        ('archived', 'Archived'),
         ('hidden', 'Hidden')
     )
 
@@ -29,7 +30,7 @@ class Post(models.Model):
     subtitle            = models.CharField(max_length=255)
     banner_photo        = models.ImageField()
     tags                = models.ManyToManyField(Tag)
-    categoty            = models.ForeignKey('Category', on_delete=models.CASCADE)
+    category            = models.ForeignKey('Category', on_delete=models.CASCADE)
     body                = models.TextField()
     status              = models.CharField(
                                             max_length=9,
