@@ -8,7 +8,7 @@ Blog app using Django Rest Framework and jQuery for @Swiftkind Interns of Summer
 - Python >= `3.5`
 - Django >= `2.0`
 - Django REST Framework >= `3.8.2`
-- jQuery >= `2.0`  <= `3.0`
+- jQuery >= `2.0`  < `3.0`
 
 # Specs
 
