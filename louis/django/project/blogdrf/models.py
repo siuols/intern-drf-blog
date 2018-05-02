@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Tag(models.Model):
-    title               = models.CharField(max_legth=255)
+    title               = models.CharField(max_length=255)
     date_created        = models.DateTimeField(auto_now_add=True)
     date_modified       = models.DateTimeField(auto_now=True)
 
@@ -11,7 +11,7 @@ class Tag(models.Model):
         return '{}'.format(self.title)
 
 class Category(models.Model):
-    title               = models.CharField(max_legth=255)
+    title               = models.CharField(max_length=255)
     date_created        = models.DateTimeField(auto_now_add=True)
     date_modified       = models.DateTimeField(auto_now=True)
 
@@ -25,14 +25,14 @@ STATUS_CHOICES =(
     )
 
 class Post(models.Model):
-    title               = models.CharField(max_legth=255)
-    subtitle            = models.CharField(max_legth=255)
+    title               = models.CharField(max_length=255)
+    subtitle            = models.CharField(max_length=255)
     banner_photo        = models.ImageField()
     tags                = models.ManyToManyField(Tag)
-    categoty            = models.ForiegnKey('Category', on_delete=models.CASCADE)
+    categoty            = models.ForeignKey('Category', on_delete=models.CASCADE)
     body                = models.TextField()
     status              = models.CharField(
-                                            max_legth=9,
+                                            max_length=9,
                                             choices=STATUS_CHOICES,
                                             default='published'
                                         )
