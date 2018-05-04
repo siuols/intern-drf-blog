@@ -57,6 +57,13 @@ class TagViewSet(viewsets.ViewSet):
         serializer = TagSerializer(tag, context=serializer_context)
         return Response(serializer.data)
 
+    def post(self, request, format=None):
+        serializer = TagSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response (serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class PostViewSet(viewsets.ViewSet):
     def list(self ,request):
         queryset = Post.objects.all()
@@ -78,20 +85,29 @@ class PostViewSet(viewsets.ViewSet):
     def post(self, request, format=None):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            post = serializer.save()
+            for tag in request.data.get('tags'):
+                t = Tag.objects.get(id=tag)
+                post.tags.add(t)
+            # import pdb; pdb.set_trace()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get_object(self, pk):
-        try:
-            return Post.objects.get(pk=pk)
-        except Post.DoesNotExist:
-            raise Http404
+    # def get_tags(self, *args, **kwargs):
+    #     tags = Tags.objects.all()
+    #     serializer = TagSerializer(tags, many=True)
+    #     return Response(serializers.data)
 
-    def put(self, request, pk, format=None):
-        post = self.get_object(pk)
-        serializer = PostSerializer(post, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # def get_object(self, pk):
+    #     try:
+    #         return Post.objects.get(pk=pk)
+    #     except Post.DoesNotExist:
+    #         raise Http404
+
+    # def put(self, request, pk, format=None):
+    #     post = self.get_object(pk)
+    #     serializer = PostSerializer(post, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
