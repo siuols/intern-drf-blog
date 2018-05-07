@@ -2,12 +2,175 @@
   <html>
   <head>
     <title>Post List</title>
+
+    <style type="text/css">
+      #container-postlist {
+        display: none;
+      }
+      #container-postcreate {
+        display: none;
+      }
+    </style>
   </head>
+  <header>
+    <nav>
+      <ul>
+        <li><a id="post-list"> Home</a></li>
+        <li><a id="post-create">Create post</a></li>
+      </ul>
+    </nav>
+  </header>
   <body>
+    <div id="container-postlist"></div>
+    <!-- <div id="container-tags"></div> -->
+    <!-- <div id="container-category"></div> -->
+    <!-- <div id="container-postdetail"></div> -->
+    <div id="container-postcreate"></div>
+  <div class="container">
+    <form  method="POST"  enctype="multipart/form-data">
+      <h2 class="form-signin-heading">Add Post</h2>
+      <div>
+        <label for="inputtitle" class="sr-only">title</label>
+        <input type="title" id="inputtitle" class="form-control" placeholder="Title " required autofocus>
+      </div>
+      <div>
+        <label for="inputsub_title" class="sr-only">sub title</label>
+        <input type="sub_title" id="inputsub_title" class="form-control" placeholder="Sub title" required autofocus>
+      </div>
+      <div>
+        <label class="cabinet BrandHeader">Banner Photo</label>
+        <input type="file" id="banner_photo" >
+      </div>
+      <div>
+        <label class="cabinet BrandHeader">Body</label>
+        <input type="body" id="inputbody" class="form-control" placeholder="Text" required autofocus>
+      </div>
+      <div>
+        <label for="inputcategory" class="sr-only">Category</label>
+        <input type="category" id="inputcategory" class="form-control"  required autofocus>
+      </div>
+      <div>
+        <label for="inputtags" class="sr-only">Tags</label>
+        <input type="tags" id="inputtags" class="form-control"  required autofocus>
+      </div>
+      <div>
+        <label for="inputstatus" class="sr-only">status</label>
+        <input type="status" id="inputstatus" class="form-control"  required autofocus>
+      </div>
+        <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">submit</button>
+    </form>
+  </div>
 
   </body>
   <script src="jquery.js"></script>
-  <script type="text/javascript">
-    console.log($);
+
+
+<script type="text/javascript">
+  // cookie for create post
+  function getCookie(name) {
+    var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+        var cookie = jQuery.trim(cookies[i]);
+        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+           break;
+        }
+      }
+    }
+  return cookieValue;
+  }
+
+  // create post
+  $("#submit").click(function(e) {
+    e.preventDefault();
+    var csrftoken = getCookie('csrftoken');
+    var title = $('#inputtitle').val();
+    var subtitle = $('#inputsub_title').val();
+    var photo = $('#inputbanner_photo').val();
+    var body = $('#inputbody').val();
+    var blog = $('#inputblog').val();
+    var category = $('#inputcategory').val();
+    var tags = $('#inputtags').val();
+    var status = $('#inputstatus').val();
+    $.ajax({
+      url : 'http://127.0.0.1:8000/api/post/',
+      type : "POST",
+      data : {
+        csrfmiddlewaretoken : csrftoken,
+        title : title,
+        subtitle : subtitle,
+        photo : photo,
+        body : body,
+        blog : blog,
+        category : category,
+        tags : tags,
+        statu : status
+      },
+      success : function(json) {
+        console.log(json);
+        alert('Post Added');
+      },
+      error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText);
+      }
+    });
+  });
+
+  var URL = "http://127.0.0.1:8000/api/"
+
+  $.get(URL + "post/", function( data ) {
+    console.log(data);
+    var list = $("#container-postlist");
+    $.each(data, function( index, value ) {
+      list.append(
+        '<h1><b>' + value.title + '</b></h1><small>' + value.status + '</small><p>' + value.subtitle + '</p><img src="' + value.banner_photo + '"><p>' + value.tags + '</p><p>' + value.category_name + '</p><p>' + value.body + '</p><small>' + value.date_display + ',Updated ' + value.timesince +'</small>'
+        );
+    });
+  });
   </script>
 </html>
+
+
+<!--
+$.ajax({
+    url: '@routes.MyController.myPostAction()',
+    method: 'post',
+    data: {
+        name: '@name'
+    },
+    success: function (data, textStatus, jqXHR) {
+        location.reload();
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+        debugger;
+    }
+});
+ -->
+
+<!--
+  var postId = /*[[${post.id}]]*/'1';
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$(document).ajaxSend(function(e, xhr, options) {
+    xhr.setRequestHeader(header, token);
+});
+$("#submit").click(function() {
+    $.ajax({
+        url : "newComment",
+        type : "post",
+        data : {
+            "postId" : postId,
+            "newComment" : $("#newComment").val()
+        },
+        success : function(data) {
+            console.log(data);
+            location.reload();
+        },
+        error : function() {
+            console.log("There was an error");
+        }
+    });
+});
+ -->
