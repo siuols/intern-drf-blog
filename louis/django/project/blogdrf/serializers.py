@@ -54,5 +54,3 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_timesince(self, instance):
         return timesince(instance.date_modified) + " ago"
-
-    def save()

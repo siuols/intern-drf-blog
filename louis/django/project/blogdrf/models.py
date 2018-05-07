@@ -1,5 +1,7 @@
 from django.db import models
 
+from versatileimagefield.fields import VersatileImageField
+
 # Create your models here.
 
 class Tag(models.Model):
@@ -28,7 +30,7 @@ STATUS_CHOICES =(
 class Post(models.Model):
     title               = models.CharField(max_length=255)
     subtitle            = models.CharField(max_length=255)
-    banner_photo        = models.ImageField()
+    banner_photo        = VersatileImageField()
     tags                = models.ManyToManyField(Tag)
     category            = models.ForeignKey('Category', on_delete=models.CASCADE)
     body                = models.TextField()
