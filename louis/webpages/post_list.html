@@ -5,7 +5,7 @@
 
     <style type="text/css">
       #container-postlist {
-        display: none;
+        display: block;
       }
       #container-postcreate {
         display: none;
@@ -47,19 +47,20 @@
         </div>
         <div>
           <label for="inputcategory" class="sr-only">Category</label>
-          <input type="text" name="category" class="form-control" required autofocus>
+          <select name="category" id="category"></select>
         </div>
         <div>
           <label for="inputtags" class="sr-only">Tags</label>
-          <input type="text" name="tags" class="form-control" required autofocus>
+          <select name="tags" id="tags" multiple></select>
         </div>
         <div>
           <label for="inputstatus" class="sr-only">Status</label>
-          <input type="text" name="status" class="form-control" required autofocus>
-        </div>
-          <select id="select-status">
-
+          <select name="status">
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+            <option value="hidden">Hidden</option>
           </select>
+        </div>
         <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
       </form>
     </div>
@@ -68,37 +69,35 @@
   <script src="jquery.js"></script>
   <script src="jquery.form.js"></script>
 
-
 <script type="text/javascript">
-
-  $('#country select').change(function() {
-    if ($(this).find('option:selected').data('xyz') === 'no-state') {
-      $('div#state').hide();
-      console.log("a");
-    } else {
-      $('div#state').show();
-      console.log("aa");
-    }
-  });
 
   var URL = "http://127.0.0.1:8000/api/";
 
+  $('#tags option').click(function() {
+    $('#tags option').removeClass('selected');
+    $(this).addClass('selected');
+  });
 
   //tag list
   $.get(URL + "tags/", function(data) {
     console.log(data);
-    var tags = $('#select-status');
-    $.each(data, function (index, value ){
-      console.log(value.title);
+    var tags = $('#tags');
+    $.each(data, function (index, value) {
+      console.log(value);
       tags.append(
-          '<option data-xyz="state" value="' + value.title + '">' + value.title + '</option>'
+          '<option >' + value.title + '</option>'
         );
     });
   });
 
   //category list
   $.get(URL + "category/", function(data) {
-    console.log(data);
+    var category = $('#category');
+    $.each(data, function (index, value ){
+      category.append(
+          '<option >' + value.title + '</option>'
+        );
+    });
   });
 
   //post create
@@ -110,13 +109,13 @@
       type: 'POST',
       success : function (response) {
         console.log(response);
+        $("#post-form")[0].reset();
       },
       error : function (response)
       {
         console.log(response);
       }
     });
-    $("#post-form")[0].reset();
   });
 
   //post list

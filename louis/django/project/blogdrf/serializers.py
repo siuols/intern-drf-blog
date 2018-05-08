@@ -8,6 +8,7 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = (
+            'id',
             'title',
             'date_created',
             'date_modified'
@@ -17,6 +18,7 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = (
+            'id',
             'title',
             'date_created',
             'date_modified'
@@ -30,6 +32,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = (
+            'id',
             'title',
             'subtitle',
             'banner_photo',

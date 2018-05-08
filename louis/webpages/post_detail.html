@@ -51,7 +51,7 @@
 //Prevent default submit. Must for Ajax post.Beginner's pit.
  e.preventDefault();
 //Prepare csrf token
- var csrftoken = getCookie('csrftoken');
+var csrftoken = getCookie('csrftoken');
 //Collect data from fields
 var title = $('#inputtitle').val();
 var sub_title = $('#inputsub_title').val();
@@ -75,18 +75,16 @@ var statu = $('#inputstatus').val();
        category : category,
        tags : tags,
        status : status
- }, // data sent with the post request
- // handle a successful response
- success : function(json) {
- console.log(json); // another sanity check
- //On success show the data posted to server as a message
- alert('Post Added');
- },
- // handle a non-successful response
- error : function(xhr,errmsg,err) {
- console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
- }
- });
+       }, // data sent with the post request
+       // handle a successful response
+       success : function(json) {
+       console.log(json);
+        alert('Post Added');
+       },
+       error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText);
+       }
+    });
 });
 </script>
 </body>
