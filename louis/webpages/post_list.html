@@ -57,11 +57,9 @@
           <label for="inputstatus" class="sr-only">Status</label>
           <input type="text" name="status" class="form-control" required autofocus>
         </div>
-         <select>
-            <option class="no-state" value="Germany">Germany</option>
-            <option class="state" value="USA">USA</option>
-            <option class="no-state" value="Spain">Spain</option>
-         </select>
+          <select id="select-status">
+
+          </select>
         <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
       </form>
     </div>
@@ -73,11 +71,29 @@
 
 <script type="text/javascript">
 
+  $('#country select').change(function() {
+    if ($(this).find('option:selected').data('xyz') === 'no-state') {
+      $('div#state').hide();
+      console.log("a");
+    } else {
+      $('div#state').show();
+      console.log("aa");
+    }
+  });
+
   var URL = "http://127.0.0.1:8000/api/";
+
 
   //tag list
   $.get(URL + "tags/", function(data) {
     console.log(data);
+    var tags = $('#select-status');
+    $.each(data, function (index, value ){
+      console.log(value.title);
+      tags.append(
+          '<option data-xyz="state" value="' + value.title + '">' + value.title + '</option>'
+        );
+    });
   });
 
   //category list
@@ -107,6 +123,7 @@
   $.get(URL + "post/", function(data) {
     console.log(data);
     var list = $("#container-postlist");
+    var postStatus = $('#select-status');
     $.each(data, function( index, value ) {
       list.append(
         '<h1><b>' + value.title + '</b></h1><small>' + value.status + '</small><p>' + value.subtitle + '</p><img src="' + value.banner_photo + '"><p>' + value.tags + '</p><p>' + value.category_name + '</p><p>' + value.body + '</p><small>' + value.date_display + ',Updated ' + value.timesince +'</small>'
