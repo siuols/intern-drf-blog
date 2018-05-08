@@ -57,6 +57,11 @@
           <label for="inputstatus" class="sr-only">Status</label>
           <input type="text" name="status" class="form-control" required autofocus>
         </div>
+         <select>
+            <option class="no-state" value="Germany">Germany</option>
+            <option class="state" value="USA">USA</option>
+            <option class="no-state" value="Spain">Spain</option>
+         </select>
         <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
       </form>
     </div>
@@ -70,11 +75,21 @@
 
   var URL = "http://127.0.0.1:8000/api/";
 
+  //tag list
+  $.get(URL + "tags/", function(data) {
+    console.log(data);
+  });
+
+  //category list
+  $.get(URL + "category/", function(data) {
+    console.log(data);
+  });
+
   //post create
   $('#submit').on('click', function (e) {
     e.preventDefault();
 
-    $('#postform').ajaxSubmit({
+    $('#post-form').ajaxSubmit({
       url: URL +'post/',
       type: 'POST',
       success : function (response) {
@@ -85,16 +100,7 @@
         console.log(response);
       }
     });
-  });
-
-  //tag list
-  $.get(URL + "tags/", function(data) {
-    console.log(data);
-  });
-
-  //category list
-  $.get(URL + "category/", function(data) {
-    console.log(data);
+    $("#post-form")[0].reset();
   });
 
   //post list
@@ -107,5 +113,7 @@
         );
     });
   });
+
+  //post detail
   </script>
 </html>
