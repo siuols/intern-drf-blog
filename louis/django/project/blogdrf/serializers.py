@@ -28,7 +28,6 @@ class PostSerializer(serializers.ModelSerializer):
     category_name = serializers.SerializerMethodField()
     date_display = serializers.SerializerMethodField()
     timesince = serializers.SerializerMethodField()
-    tags = TagSerializer(many=True, read_only=True)
     class Meta:
         model = Post
         fields = (
@@ -37,7 +36,6 @@ class PostSerializer(serializers.ModelSerializer):
             'subtitle',
             'banner_photo',
             'tags',
-            # 'tag',
             'category',
             'category_name',
             'body',
