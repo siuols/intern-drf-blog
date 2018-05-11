@@ -15,12 +15,26 @@
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/slider.css"><link rel="stylesheet" type="text/css" href="css/parallax.css">
-    <link rel="stylesheet" href="css/card.css">
+    <link rel="stylesheet" type="text/css" href="css/timeline.css">
     <link rel="stylesheet" href="css/demo.css">
     <link rel="stylesheet" href="css/footer-basic-centered.css">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
   </head>
   <body>
+
+      <div class="row">
+        <div class="innerLeft">
+          <p>Image Title</p>
+        </div>
+        <div class="innerRight">
+          <a class="card-text status">#View</a>
+          <a class="card-text status">#Save</a>
+        </div>
+      </div>
+
+    </div>
+
+
     <div class='slider'>
       <div class='slide1'>
         <div class="contain">
@@ -59,11 +73,6 @@
     <nav class="nav">
       <a href="">Home</a>
     </nav>
-
-
-
-
-
 
     <div data-page="container-postdetail" id="container-postdetail"></div>
     <div id="container-postcreate">
@@ -105,7 +114,54 @@
       </form>
     </div>
 
-    <div data-page="container-postlist" id="container-postlist"></div>
+    <div id="display" class="modal">
+      <form method="POST" id="post-form" class="modal-content animate" enctype="multipart/form-data">
+        <div class="imgcontainer">
+          <span class="close" title="Close Modal">&times;</span>
+        </div>
+
+        <div class="container">
+          <div>
+            <label for="title" class="sr-only">Title</label>
+            <input type="text" name="title" class="form-control" placeholder="" required autofocus>
+          </div>
+          <div>
+            <label for="sub_title" class="sr-only">Sub Title</label>
+            <input type="text" name="subtitle" class="form-control" placeholder="" required autofocus>
+          </div>
+          <div class="thumbnails" style="width:400px;">
+            <label class="cabinet BrandHeader">Banner Photo</label>
+            <input type="file" class="file" name="banner_photo" id="test">
+          </div>
+          <div>
+            <label class="cabinet BrandHeader">Body</label>
+            <textarea class="form-control" name="body" placeholder="" required autofocus></textarea>
+          </div>
+          <div>
+            <label for="category" class="sr-only">Category</label>
+            <select name="category" id="category"></select>
+          </div>
+          <div>
+            <label for="tags" class="sr-only">Tags</label>
+            <select name="tags" id="tags" multiple='multiple'></select>
+          </div>
+          <div>
+            <label for="status" class="sr-only">Status</label>
+            <select name="status">
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+              <option value="hidden">Hidden</option>
+            </select>
+          </div>
+
+          <button id="submit" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- <div data-page="container-postlist" id="container-postlist"></div> -->
+
+    <div class="timeline" id="container-postlist"></div>
 
     <div class="parallax"></div>
 
@@ -124,7 +180,18 @@
   <script src="js/modal.js"></script>
   <script src="js/post.js"></script>
 
+
   <script type="text/javascript">
+    $.get(URL + "tags/", function(data) {
+      // console.log(data);
+      var tags = $('#tags');
+      $.each(data, function (index, value) {
+        // sconsole.log(value);
+        tags.append(
+            '<option value="' + value.id + '" >' + value.title + '</option>'
+          );
+      });
+    });
 
     $(document).ready(function() {
       $("#nav a").on('click', function() {
@@ -135,7 +202,7 @@
         });
       });
     });
-    </script>
+  </script>
 
   <script type="text/javascript">
 
@@ -157,41 +224,6 @@
     });
 
 
-
-
-    //post list
-    $.get(URL + "post/", function(data) {
-      // console.log(data);
-      $.each(data, function( index, value ) {
-        list.append(
-          '<div class="blog-container">' +
-            '<div class="blog-header">' +
-              '<div class="blog-cover">' +
-              '</div>' +
-            '</div>' +
-            '<div class="blog-body">' +
-              '<div class="blog-title">' +
-                '<h1><a href="#">' + value.title + '</a></h1>' +
-              '</div>' +
-              '<div class="blog-summary">' +
-                '<p>' + value.body + '</p>' +
-              '</div>' +
-              '<div class="blog-tags">' +
-                '<ul>' +
-                  '<li><a href="#">' + value.tags +'</a></li>' +
-                '</ul>' +
-              '</div>' +
-              '<div class="blog-footer">' +
-                '<ul>' +
-                  '<li class="published-date">' + value.timesince + '</li>' +
-                  '<li class="comments"><a href="#"><svg class="icon-bubble"><use xlink:href="#icon-bubble"></use></svg><span class="numero">4</span></a></li>' +
-                '</ul>' +
-              '</div>' +
-            '</div>' +
-          '</div>'
-          );
-      });
-    });
 
     //post detail
     $.get(URL + "post/" + 45 + "/", function(data) {

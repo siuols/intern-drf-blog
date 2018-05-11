@@ -37,3 +37,22 @@ $('#submit').on('click', function (e) {
     }
   });
 });
+
+//post list
+$.get(URL + "post/", function(data) {
+  // console.log(data);
+  $.each(data, function( index, value ) {
+    list.append(
+
+        '<div class="column">' +
+          '<div class="title">' +
+            '<h1><img src="' + value.banner_photo + '"</h1>' +
+            '<h2>' + value.title + '<br><small>' + value.subtitle + '</small></h2>' +
+          '</div>' +
+          '<div class="description">' +
+            '<p>' + value.body + '</p>' +
+          '</div>' +
+        '</div>'
+    );
+  });
+});
