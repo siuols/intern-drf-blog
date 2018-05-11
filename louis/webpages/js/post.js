@@ -3,20 +3,6 @@ var URL = "http://127.0.0.1:8000/api/";
 var list = $("#container-postlist");
 var detail = $('#container-postdetail');
 
-var home = $("#postList");
-var D = $("#postDetail");
-
-home.on('click', function() {
-  list.css('display', 'block');
-  detail.css('display', 'none');
-});
-
-D.on('click', function() {
-  list.css('display', 'none');
-  detail.css('display', 'block');
-  console.log("detail");
-});
-
 //tag list
 $.get(URL + "tags/", function(data) {
   // console.log(data);
@@ -94,10 +80,18 @@ $(document).on('click', 'button', function(){
         '</div>' +
         '<div class="description">' +
           '<p>' + data.body + '</p>' +
+          '<p>' + data.tags + '</p>' +
+          '<p>' + data.category_name + '</p>' +
+          '<p>' + data.timesince + '</p>' +
         '</div>' +
-        '<button id="postD" data-id="' + data.id + '">Read more..</button>' +
+        '<button class="back">back..</button>' +
       '</div>'
     );
     detail.show();
    });
+  $('.back').on('click', function(){
+    list.show();
+    detail.hide();
+    return false;
+  });
 });
