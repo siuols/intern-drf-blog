@@ -1,0 +1,19 @@
+.nav {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+  position: fixed;
+  top: 0;
+  z-index:10;
+  width: 100%;
+}
+
+.nav a {
+  float: left;
+  display: block;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}

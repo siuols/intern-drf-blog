@@ -10,28 +10,71 @@
       #container-postdetail {
         display: none;
       }
+
     </style>
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/slider.css"><link rel="stylesheet" type="text/css" href="css/parallax.css">
+    <link rel="stylesheet" href="css/card.css">
+    <link rel="stylesheet" href="css/demo.css">
+    <link rel="stylesheet" href="css/footer-basic-centered.css">
+    <link rel="stylesheet" type="text/css" href="css/modal.css">
   </head>
-  <header>
-    <nav>
-      <ul>
-        <li><a id="post-list"> Home</a></li>
-        <li><a id="post-create">Create post</a></li>
-      </ul>
-    </nav>
-  </header>
   <body>
-    <div id="container-postlist"></div>
-    <div id="container-postdetail"></div>
+    <div class='slider'>
+      <div class='slide1'>
+        <div class="contain">
+          <article>
+            <p>Ullamcorper</p>
+            <h3 class="heading">Maecenas nulla tellus</h3>
+            <p>Vitae lobortis id ut mi in molestie in</p>
+          </article>
+        </div>
+      </div>
+      <div class='slide2'>
+        <div class="contain">
+          <article>
+            <p>Ullamcorper</p>
+            <h3 class="heading">Maecenas nulla tellus</h3>
+            <p>Vitae lobortis id ut mi in molestie in</p>
+          </article>
+        </div>
+      </div>
+      <div class='slide3'>
+        <div class="contain">
+          <article>
+            <p>Ullamcorper</p>
+            <h3 class="heading">Maecenas nulla tellus</h3>
+            <p>Vitae lobortis id ut mi in molestie in</p>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div class="align-text">
+      <p><small>Music blogs from thousands of top Music blogs in our index using search and social metrics.</small></p>
+    </div>
+
+    <button id="form-post">Post</button>
+
+    <nav class="nav">
+      <a href="">Home</a>
+    </nav>
+
+
+
+
+
+
+    <div data-page="container-postdetail" id="container-postdetail"></div>
     <div id="container-postcreate">
-      <form  method="POST" enctype="multipart/form-data">
+      <form  method="POST" id="post-form" enctype="multipart/form-data">
         <h2 class="form-signin-heading">Create post</h2>
         <div>
-          <label for="inputtitle" class="sr-only">Title</label>
+          <label for="title" class="sr-only">Title</label>
           <input type="text" name="title" class="form-control" placeholder="" required autofocus>
         </div>
         <div>
-          <label for="inputsub_title" class="sr-only">Sub Title</label>
+          <label for="sub_title" class="sr-only">Sub Title</label>
           <input type="text" name="subtitle" class="form-control" placeholder="" required autofocus>
         </div>
         <div class="thumbnails" style="width:400px;">
@@ -43,15 +86,15 @@
           <textarea class="form-control" name="body" placeholder="" required autofocus></textarea>
         </div>
         <div>
-          <label for="inputcategory" class="sr-only">Category</label>
+          <label for="category" class="sr-only">Category</label>
           <select name="category" id="category"></select>
         </div>
         <div>
-          <label for="inputtags" class="sr-only">Tags</label>
+          <label for="tags" class="sr-only">Tags</label>
           <select name="tags" id="tags" multiple='multiple'></select>
         </div>
         <div>
-          <label for="inputstatus" class="sr-only">Status</label>
+          <label for="status" class="sr-only">Status</label>
           <select name="status">
             <option value="published">Published</option>
             <option value="draft">Draft</option>
@@ -61,71 +104,102 @@
         <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
       </form>
     </div>
+
+    <div data-page="container-postlist" id="container-postlist"></div>
+
+    <div class="parallax"></div>
+
+    <footer class="footer-basic-centered">
+      <p class="footer-company-motto">Soooooo ayun po ano!!</p>
+      <p class="footer-links">
+        <a href="#">Home</a> ·
+        <a href="#">Blog</a>
+      </p>
+      <p class="footer-company-name">My blog &copy; 2018</p>
+    </footer>
+
   </body>
-  <script src="jquery.js"></script>
-  <script src="jquery.form.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery.form.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/post.js"></script>
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  var URL = "http://127.0.0.1:8000/api/";
-
-  //tag list
-  $.get(URL + "tags/", function(data) {
-    // console.log(data);
-    var tags = $('#tags');
-    $.each(data, function (index, value) {
-      // sconsole.log(value);
-      tags.append(
-          '<option value="' + value.id + '" >' + value.title + '</option>'
-        );
+    $(document).ready(function() {
+      $("#nav a").on('click', function() {
+      var page = $(this).data('page');
+          $("#pages .page:not('.hide')").stop().fadeOut('fast', function() {
+          $(this).addClass('hide');
+          $('#pages .page[data-page="' + page + '"]').fadeIn('slow').removeClass('hide');
+        });
+      });
     });
-  });
+    </script>
 
-  //category list
-  $.get(URL + "category/", function(data) {
-    var category = $('#category');
-    $.each(data, function (index, value ){
-      category.append(
-          '<option  value="' + value.id + '">' + value.title + '</option>'
-        );
-    });
-  });
+  <script type="text/javascript">
 
-  //post create
-  $('#submit').on('click', function (e) {
-    e.preventDefault();
-    $('#post-form').ajaxSubmit({
-      url: URL +'post/',
-      type: 'POST',
-      success : function (response) {
-        console.log(response);
-        $("#post-form")[0].reset();
-      },
-      error : function (response) {
-        console.log(response);
-      }
-    });
-  });
-
-  //post list
-  $.get(URL + "post/", function(data) {
     var list = $("#container-postlist");
-    $.each(data, function( index, value ) {
-      list.append(
-        '<h1><b>' + value.title + '</b></h1><small>' + value.status + '</small><p>' + value.subtitle + '</p><img src="' + value.banner_photo + '"><p>' + value.tags.title + '</p><p>' + value.category_name + '</p><p>' + value.body + '</p><small>' + value.date_display + ',Updated ' + value.timesince +'</small>'
+    var detail = $('#container-postdetail');
+
+    var home = $("#postList");
+    var D = $("#postDetail");
+
+    home.on('click', function() {
+      list.css('display', 'block');
+      detail.css('display', 'none');
+    });
+
+    D.on('click', function() {
+      list.css('display', 'none');
+      detail.css('display', 'block');
+      console.log("detail");
+    });
+
+
+
+
+    //post list
+    $.get(URL + "post/", function(data) {
+      // console.log(data);
+      $.each(data, function( index, value ) {
+        list.append(
+          '<div class="blog-container">' +
+            '<div class="blog-header">' +
+              '<div class="blog-cover">' +
+              '</div>' +
+            '</div>' +
+            '<div class="blog-body">' +
+              '<div class="blog-title">' +
+                '<h1><a href="#">' + value.title + '</a></h1>' +
+              '</div>' +
+              '<div class="blog-summary">' +
+                '<p>' + value.body + '</p>' +
+              '</div>' +
+              '<div class="blog-tags">' +
+                '<ul>' +
+                  '<li><a href="#">' + value.tags +'</a></li>' +
+                '</ul>' +
+              '</div>' +
+              '<div class="blog-footer">' +
+                '<ul>' +
+                  '<li class="published-date">' + value.timesince + '</li>' +
+                  '<li class="comments"><a href="#"><svg class="icon-bubble"><use xlink:href="#icon-bubble"></use></svg><span class="numero">4</span></a></li>' +
+                '</ul>' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+          );
+      });
+    });
+
+    //post detail
+    $.get(URL + "post/" + 45 + "/", function(data) {
+      console.log(data);
+      var tag;
+      detail.append(
+          '<h1><b>' + data.title + '</b></h1><small>' + data.status + '</small><p>' + data.subtitle + '</p><img src="' + data.banner_photo + '"><p>' + data.tags + '</p><p>' + data.category_name + '</p><p>' + data.body + '</p><small>' + data.date_display + ',Updated ' + data.timesince +'</small>'
         );
     });
-  });
-
-  //post detail
-  $.get(URL + "post/" + 45 + "/", function(data) {
-    console.log(data);
-    var detail = $('#container-postdetail');
-    var tag;
-    // console.log(detail);
-    detail.append(
-        '<h1><b>' + data.title + '</b></h1><small>' + data.status + '</small><p>' + data.subtitle + '</p><img src="' + data.banner_photo + '"><p>' + data.tags + '</p><p>' + data.category_name + '</p><p>' + data.body + '</p><small>' + data.date_display + ',Updated ' + data.timesince +'</small>'
-      );
-  });
   </script>
 </html>

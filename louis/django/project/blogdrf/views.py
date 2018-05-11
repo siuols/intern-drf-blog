@@ -66,7 +66,7 @@ class TagViewSet(viewsets.ViewSet):
 
 class PostViewSet(viewsets.ViewSet):
     def list(self ,request):
-        queryset = Post.objects.all()
+        queryset = Post.objects.filter(status='published')
         serializer_context = {
             'request': request,
         }
