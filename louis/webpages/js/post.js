@@ -2,6 +2,7 @@ var URL = "http://127.0.0.1:8000/api/";
 
 var list = $("#container-postlist");
 var detail = $('#container-postdetail');
+var create = $('#post-form');
 
 //tag list
 $.get(URL + "tags/", function(data) {
@@ -25,23 +26,7 @@ $.get(URL + "category/", function(data) {
   });
 });
 
-//post create
-$('#submit').on('click', function (e) {
-  e.preventDefault();
-  $('#post-form').ajaxSubmit({
-    url: URL +'post/',
-    type: 'POST',
-    success : function (response) {
-      console.log(response);
-      $("#post-form")[0].reset();
-    },
-    error : function (response) {
-      console.log(response);
-    }
-  });
-});
-
-
+create.hide();
 detail.hide();
 
 //post list
@@ -95,3 +80,31 @@ $(document).on('click', 'button', function(){
     return false;
   });
 });
+
+//post create
+$('#submit').on('click', function (e) {
+  e.preventDefault();
+  $('#post-form').ajaxSubmit({
+    url: URL +'post/',
+    type: 'POST',
+    success : function (response) {
+      console.log(response);
+      create.hide();
+      list.show();
+      detail.hide();
+      return false;
+      $("#post-form")[0].reset();
+    },
+    error : function (response) {
+      console.log(response);
+    }
+  });
+});
+
+$('.create-post').on('click', function(){
+  create.show();
+  list.hide();
+  detail.hide();
+  return false;
+});
+
