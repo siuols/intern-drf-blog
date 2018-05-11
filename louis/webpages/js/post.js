@@ -56,3 +56,48 @@ $('#submit').on('click', function (e) {
 });
 
 
+detail.hide();
+
+//post list
+$.get(URL + "post/", function(data) {
+  // console.log(data);
+  $.each(data, function( index, value ) {
+    list.append(
+      '<div class="column">' +
+        '<div class="title">' +
+          '<h1><img style="width: 50%"; src="' + value.banner_photo + '"</h1>' +
+          '<h2>' + value.title + '<br><small>' + value.subtitle + '</small></h2>' +
+        '</div>' +
+        '<div class="description">' +
+          '<p>' + value.body + '</p>' +
+        '</div>' +
+        '<button id="postD" data-id="' + value.id + '">Read more..</button>' +
+      '</div>'
+    );
+  });
+});
+
+//post detail
+$(document).on('click', 'button', function(){
+   console.log('cladfasdfsafcik');
+   list.hide();
+   var id = $(this).data('id');
+   var url = URL +'post/'+ id;
+   $.get(url, function(data){
+    console.log(data);
+
+    detail.append(
+      '<div class="column">' +
+        '<div class="title">' +
+          '<h1><img style="width: 50%"; src="' + data.banner_photo + '"</h1>' +
+          '<h2>' + data.title + '<br><small>' + data.subtitle + '</small></h2>' +
+        '</div>' +
+        '<div class="description">' +
+          '<p>' + data.body + '</p>' +
+        '</div>' +
+        '<button id="postD" data-id="' + data.id + '">Read more..</button>' +
+      '</div>'
+    );
+    detail.show();
+   });
+});
