@@ -1,5 +1,22 @@
 var URL = "http://127.0.0.1:8000/api/";
 
+var list = $("#container-postlist");
+var detail = $('#container-postdetail');
+
+var home = $("#postList");
+var D = $("#postDetail");
+
+home.on('click', function() {
+  list.css('display', 'block');
+  detail.css('display', 'none');
+});
+
+D.on('click', function() {
+  list.css('display', 'none');
+  detail.css('display', 'block');
+  console.log("detail");
+});
+
 //tag list
 $.get(URL + "tags/", function(data) {
   // console.log(data);
@@ -38,21 +55,4 @@ $('#submit').on('click', function (e) {
   });
 });
 
-//post list
-$.get(URL + "post/", function(data) {
-  // console.log(data);
-  $.each(data, function( index, value ) {
-    list.append(
 
-        '<div class="column">' +
-          '<div class="title">' +
-            '<h1><img src="' + value.banner_photo + '"</h1>' +
-            '<h2>' + value.title + '<br><small>' + value.subtitle + '</small></h2>' +
-          '</div>' +
-          '<div class="description">' +
-            '<p>' + value.body + '</p>' +
-          '</div>' +
-        '</div>'
-    );
-  });
-});

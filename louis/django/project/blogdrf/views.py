@@ -10,6 +10,8 @@ from rest_framework.response import Response
 
 from .models import Category, Tag, Post
 
+from .pagination import StandardResultsPagination
+
 from .serializers import CategorySerializer, TagSerializer, PostSerializer
 
 # Create your views here.

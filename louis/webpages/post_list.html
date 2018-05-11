@@ -7,18 +7,16 @@
       #container-postcreate {
         display: none;
       }
-      #container-postdetail {
-        display: none;
-      }
 
     </style>
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/slider.css"><link rel="stylesheet" type="text/css" href="css/parallax.css">
     <link rel="stylesheet" type="text/css" href="css/timeline.css">
+    <link rel="stylesheet" type="text/css" href="css/form.css">
     <link rel="stylesheet" href="css/demo.css">
     <link rel="stylesheet" href="css/footer-basic-centered.css">
-    <link rel="stylesheet" type="text/css" href="css/modal.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/modal.css"> -->
   </head>
   <body>
 
@@ -39,7 +37,6 @@
       <div class='slide1'>
         <div class="contain">
           <article>
-            <p>Ullamcorper</p>
             <h3 class="heading">Maecenas nulla tellus</h3>
             <p>Vitae lobortis id ut mi in molestie in</p>
           </article>
@@ -48,7 +45,6 @@
       <div class='slide2'>
         <div class="contain">
           <article>
-            <p>Ullamcorper</p>
             <h3 class="heading">Maecenas nulla tellus</h3>
             <p>Vitae lobortis id ut mi in molestie in</p>
           </article>
@@ -57,7 +53,6 @@
       <div class='slide3'>
         <div class="contain">
           <article>
-            <p>Ullamcorper</p>
             <h3 class="heading">Maecenas nulla tellus</h3>
             <p>Vitae lobortis id ut mi in molestie in</p>
           </article>
@@ -68,23 +63,35 @@
       <p><small>Music blogs from thousands of top Music blogs in our index using search and social metrics.</small></p>
     </div>
 
-    <button id="form-post">Post</button>
-
     <nav class="nav">
-      <a href="">Home</a>
+      <a data-page="information" href="#">home</a>
+      <a data-page="blog" href="#">detail</a>
     </nav>
 
-    <div data-page="container-postdetail" id="container-postdetail"></div>
-    <div id="container-postcreate">
+    <div id="pages">
+      <div id="information" class="page" data-page="information">
+
+
+
+      </div>
+
+      <div id="blog" class="page hide" data-page="blog">
+
+
+
+      </div>
+
+    </div>
+
+    <div class="container" id="container-postcreate">
       <form  method="POST" id="post-form" enctype="multipart/form-data">
-        <h2 class="form-signin-heading">Create post</h2>
         <div>
           <label for="title" class="sr-only">Title</label>
-          <input type="text" name="title" class="form-control" placeholder="" required autofocus>
+          <input type="text" name="title" class="form-control" placeholder="Title" required autofocus>
         </div>
         <div>
           <label for="sub_title" class="sr-only">Sub Title</label>
-          <input type="text" name="subtitle" class="form-control" placeholder="" required autofocus>
+          <input type="text" name="subtitle" class="form-control" placeholder="Subtitle" required autofocus>
         </div>
         <div class="thumbnails" style="width:400px;">
           <label class="cabinet BrandHeader">Banner Photo</label>
@@ -92,7 +99,7 @@
         </div>
         <div>
           <label class="cabinet BrandHeader">Body</label>
-          <textarea class="form-control" name="body" placeholder="" required autofocus></textarea>
+          <textarea class="form-control" name="body" placeholder="Body" required autofocus></textarea>
         </div>
         <div>
           <label for="category" class="sr-only">Category</label>
@@ -110,58 +117,12 @@
             <option value="hidden">Hidden</option>
           </select>
         </div>
-        <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        <button id="submit" type="submit">Submit</button>
       </form>
     </div>
-
-    <div id="display" class="modal">
-      <form method="POST" id="post-form" class="modal-content animate" enctype="multipart/form-data">
-        <div class="imgcontainer">
-          <span class="close" title="Close Modal">&times;</span>
-        </div>
-
-        <div class="container">
-          <div>
-            <label for="title" class="sr-only">Title</label>
-            <input type="text" name="title" class="form-control" placeholder="" required autofocus>
-          </div>
-          <div>
-            <label for="sub_title" class="sr-only">Sub Title</label>
-            <input type="text" name="subtitle" class="form-control" placeholder="" required autofocus>
-          </div>
-          <div class="thumbnails" style="width:400px;">
-            <label class="cabinet BrandHeader">Banner Photo</label>
-            <input type="file" class="file" name="banner_photo" id="test">
-          </div>
-          <div>
-            <label class="cabinet BrandHeader">Body</label>
-            <textarea class="form-control" name="body" placeholder="" required autofocus></textarea>
-          </div>
-          <div>
-            <label for="category" class="sr-only">Category</label>
-            <select name="category" id="category"></select>
-          </div>
-          <div>
-            <label for="tags" class="sr-only">Tags</label>
-            <select name="tags" id="tags" multiple='multiple'></select>
-          </div>
-          <div>
-            <label for="status" class="sr-only">Status</label>
-            <select name="status">
-              <option value="published">Published</option>
-              <option value="draft">Draft</option>
-              <option value="hidden">Hidden</option>
-            </select>
-          </div>
-
-          <button id="submit" type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- <div data-page="container-postlist" id="container-postlist"></div> -->
 
     <div class="timeline" id="container-postlist"></div>
+    <div class="timeline" id="container-postdetail"><p>pussy cat</p></div>
 
     <div class="parallax"></div>
 
@@ -177,61 +138,56 @@
   </body>
   <script src="js/jquery.js"></script>
   <script src="js/jquery.form.js"></script>
-  <script src="js/modal.js"></script>
+  <!-- <script src="js/modal.js"></script> -->
   <script src="js/post.js"></script>
 
 
   <script type="text/javascript">
-    $.get(URL + "tags/", function(data) {
+
+    detail.hide();
+    //post list
+    $.get(URL + "post/", function(data) {
       // console.log(data);
-      var tags = $('#tags');
-      $.each(data, function (index, value) {
-        // sconsole.log(value);
-        tags.append(
-            '<option value="' + value.id + '" >' + value.title + '</option>'
-          );
+      $.each(data, function( index, value ) {
+        list.append(
+          '<div class="column">' +
+            '<div class="title">' +
+              '<h1><img style="width: 50%"; src="' + value.banner_photo + '"</h1>' +
+              '<h2>' + value.title + '<br><small>' + value.subtitle + '</small></h2>' +
+            '</div>' +
+            '<div class="description">' +
+              '<p>' + value.body + '</p>' +
+            '</div>' +
+            '<button id="postD" data-id="' + value.id + '">Read more..</button>' +
+          '</div>'
+        );
       });
     });
-
-    $(document).ready(function() {
-      $("#nav a").on('click', function() {
-      var page = $(this).data('page');
-          $("#pages .page:not('.hide')").stop().fadeOut('fast', function() {
-          $(this).addClass('hide');
-          $('#pages .page[data-page="' + page + '"]').fadeIn('slow').removeClass('hide');
-        });
-      });
-    });
-  </script>
-
-  <script type="text/javascript">
-
-    var list = $("#container-postlist");
-    var detail = $('#container-postdetail');
-
-    var home = $("#postList");
-    var D = $("#postDetail");
-
-    home.on('click', function() {
-      list.css('display', 'block');
-      detail.css('display', 'none');
-    });
-
-    D.on('click', function() {
-      list.css('display', 'none');
-      detail.css('display', 'block');
-      console.log("detail");
-    });
-
-
 
     //post detail
-    $.get(URL + "post/" + 45 + "/", function(data) {
-      console.log(data);
-      var tag;
-      detail.append(
-          '<h1><b>' + data.title + '</b></h1><small>' + data.status + '</small><p>' + data.subtitle + '</p><img src="' + data.banner_photo + '"><p>' + data.tags + '</p><p>' + data.category_name + '</p><p>' + data.body + '</p><small>' + data.date_display + ',Updated ' + data.timesince +'</small>'
+    $(document).on('click', 'button', function(){
+       console.log('cladfasdfsafcik');
+       list.hide();
+       var id = $(this).data('id');
+       var url = URL +'post/'+ id;
+       $.get(url, function(data){
+        console.log(data);
+
+        detail.append(
+          '<div class="column">' +
+            '<div class="title">' +
+              '<h1><img style="width: 50%"; src="' + data.banner_photo + '"</h1>' +
+              '<h2>' + data.title + '<br><small>' + data.subtitle + '</small></h2>' +
+            '</div>' +
+            '<div class="description">' +
+              '<p>' + data.body + '</p>' +
+            '</div>' +
+            '<button id="postD" data-id="' + data.id + '">Read more..</button>' +
+          '</div>'
         );
+        detail.show();
+       });
     });
   </script>
+
 </html>
